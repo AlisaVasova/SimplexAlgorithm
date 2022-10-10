@@ -1,1 +1,1 @@
-# SImplexAlgorithm
+# SimplexAlgorithm
