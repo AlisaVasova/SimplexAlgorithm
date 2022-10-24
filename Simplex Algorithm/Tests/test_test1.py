@@ -6,8 +6,7 @@ def test_sqrt():
 
 
 import sys
-
-sys.path.insert(1, '../decision')
+sys.path.append('..')
 import decision
 
 def test_one():
