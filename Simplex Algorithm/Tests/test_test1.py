@@ -5,6 +5,7 @@ def test_sqrt():
    assert math.sqrt(num) == 5
 
 import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append('../')
 import decision
 
