@@ -6,5 +6,5 @@ def test_sqrt():
 
 import decision
 
-def test_1():
+def test_one():
    assert decision.is_there_solution(2, [[1, 1],[0,0]], 1) == True
