@@ -88,14 +88,14 @@ def ved_stroka(array, ved_stolb, bdr, m):
         if array[j - 1][ved_stolb - 1] > 0:
             if ved_s == -1 or (bdr[j - 1] / array[j - 1][ved_stolb - 1]) < min_s:
                 min_s = bdr[j - 1] / array[j - 1][ved_stolb - 1]
-                ved_str = j
+                ved_s = j
 
     return ved_s
 
 def decision(m, n, bdr, array, basis, cel_func, delts):
     print_table(basis, bdr, array, n, m, cel_func, delts)
 
-    isThereSolution = True
+    is_there_solution_flag = True
     while True:
         flag = True
         for i in range(1, n + 1):
@@ -107,7 +107,8 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
 
         ved_stolb = ved_stolbec(delts, n)
 
-        if is_there_solution(m, array, ved_stolb) == False:
+        if is_there_solution(m, array, ved_stolb) == False: 
+            is_there_solution_flag = False
             break
         
         ved_str = ved_stroka(array, ved_stolb, bdr, m)
@@ -115,7 +116,7 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
         basis[ved_str - 1] = ved_stolb
         preobr(ved_str, ved_stolb, array, m, n, bdr, cel_func, delts, basis)
 
-    if isThereSolution == False:
+    if is_there_solution_flag == False:
         print("Целевая функция не ограничена, нет решения")
         return False
     else:
