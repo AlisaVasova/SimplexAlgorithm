@@ -5,7 +5,7 @@ def test_sqrt():
    assert math.sqrt(num) == 5
 
 import sys
-sys.path.append('..')
+sys.path.append('../')
 import decision
 
 def test_one():
