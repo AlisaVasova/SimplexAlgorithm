@@ -1,3 +1,5 @@
+import decision
+
 def find_basis(m, n, ogr):
     basis = [0] * m # какие переменные входят в базис
     for k in range(1, m + 1): # для каждой строки базиса
@@ -54,7 +56,7 @@ def artificial_basis(c, n, m, ogr, basis):
 
     return m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop
 
-def reverse_transition(n, m, ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis):
+def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis_dop):
     # проверяем получившееся решение
     basis = basis_dop
 
@@ -67,7 +69,7 @@ def reverse_transition(n, m, ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_do
                     ved_str = l + 1
                     ved_stolb = k
                     basis[ved_str - 1] = ved_stolb
-                    preobr(ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis)
+                    decision.preobr(ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis)
                     break;
 
     bdr = bdr_dop
@@ -158,15 +160,15 @@ if (c == 0):
             array[j - 1][i - 1] = ogr[j - 1][i - 1]
     # оценки
     delts = [0] * n
-    decision(m, n, bdr, array, basis, cel_func, delts)
+    decision.decision(m, n, bdr, array, basis, cel_func, delts)
 else:
     m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, ogr, basis)
 
     # решаем вспомогательную задачу
-    if (decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop) == True):
-        m, n, bdr, array, basis, cel_func, delts = reverse_transition(n, m, ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis)
+    if (decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop) == True):
+        m, n, bdr, array, basis, cel_func, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis_dop)
 
         # решаем исходную задачу
-        decision(m, n, bdr, array, basis, cel_func, delts)
+        decision.decision(m, n, bdr, array, basis, cel_func, delts)
     
 
