@@ -35,9 +35,9 @@ def test_is_decision():
 def test_is_not_decision():
     n = 4
     m = 2
-    cel_func = [0, 2, 0, 4]
-    array = [[10, 0, 0, 1],[4, 1, 6, 0]]
-    bdr = [-14, -4]
-    basis = [2, 4]
+    cel_func = [-1, -2, 0, 0]
+    array = [[1, -1, 1, 0],[2, 0, 0, 1]]
+    bdr = [10, 40]
+    basis = [3, 4]
     delts = [0,0,0,0]
     assert decision.decision(m, n, bdr, array, basis, cel_func, delts) == False
