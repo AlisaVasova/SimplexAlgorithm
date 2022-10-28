@@ -1,5 +1,3 @@
-import sys, os
-sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../app"))
 import decision
 
 def test_is_sol():
