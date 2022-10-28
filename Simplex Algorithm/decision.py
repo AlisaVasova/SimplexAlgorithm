@@ -65,6 +65,8 @@ def print_table(basis, bdr, array, n, m, cel_func, delts):
         print("_", end='')
     print("")
 
+    return True
+
 def is_there_solution(m, array, ved_stolb):
     for j in range(1, m + 1):
             if array[j - 1][ved_stolb - 1] > 0:
