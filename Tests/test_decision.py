@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../')
 import decision
 
 def test_is_sol():
