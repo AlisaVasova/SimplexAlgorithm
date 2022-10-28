@@ -1,4 +1,4 @@
-import app.decision
+import app.decision as decision
 
 def test_is_sol():
    assert decision.is_there_solution(2, [[1, 1],[0,0]], 1) == True
