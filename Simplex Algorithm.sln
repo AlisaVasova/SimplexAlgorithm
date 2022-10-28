@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Simplex Algorithm", "Simplex Algorithm\Simplex Algorithm.pyproj", "{0DF4D1C0-B0DF-47E8-93EB-8E406D168755}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "app", "Simplex Algorithm\app.pyproj", "{0DF4D1C0-B0DF-47E8-93EB-8E406D168755}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
