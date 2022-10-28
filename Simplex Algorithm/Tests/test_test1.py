@@ -25,7 +25,7 @@ def test_is_not_ved_st():
 def test_is_decision():
     n = 4
     m = 2
-    cel_func = [1, 2, 0, 3]
+    cel_func = [-1, -2, 0, 3]
     array = [[1, 0, 2, 1],[4, 1, 6, 0]]
     bdr = [4, 14]
     basis = [2, 4]
@@ -36,7 +36,7 @@ def test_is_not_decision():
     n = 4
     m = 2
     cel_func = [1, 2, 0, 3]
-    array = [[1, 0, 2, 1],[4, 1, 6, 0]]
+    array = [[1, 0, -2, 1],[4, 1, 6, 0]]
     bdr = [-4, -14]
     basis = [2, 4]
     delts = [0,0,0,0]
