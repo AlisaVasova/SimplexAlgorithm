@@ -35,7 +35,7 @@ def test_is_decision():
 def test_is_not_decision():
     n = 4
     m = 2
-    cel_func = [0, 2, 0, 0]
+    cel_func = [0, 0, 0, 4]
     array = [[4, 0, 6, 1],[4, 1, 6, 0]]
     bdr = [-4, 14]
     basis = [2, 4]
