@@ -2,22 +2,22 @@ import decision
 
 def find_basis(m, n, ogr):
     basis = [0] * m # какие переменные входят в базис
-    for k in range(1, m + 1): # для каждой строки базиса
-        for i in range(1, n + 1): # для каждой переменной
+    for k in range(0, m): # для каждой строки базиса
+        for i in range(0, n): # для каждой переменной
             flag = False
-            for j in range(1, m + 1): # для каждого ограничения
+            for j in range(0, m): # для каждого ограничения
                 if j != k:
-                    if ogr[j - 1][i - 1] != 0:
+                    if ogr[j][i] != 0:
                         flag = True
                         break
                 else:
-                    if ogr[j - 1][i - 1] != 1:
+                    if ogr[j][i] != 1:
                         flag = True
                         break
             if flag == True:
                 continue;
             else:
-                basis[k - 1] = i
+                basis[k] = i + 1
                 break
     return basis
 
@@ -86,49 +86,36 @@ def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, del
 
     return m, n, bdr, array, basis, cel_func, delts
 
-# ввод данных
-print("Введите количество переменных: ", end='')
-n = int(input())
-print("Введите количество ограничений: ", end='')
-m = int(input())
+def input_model():
+    # ввод данных
+    print("Введите количество переменных: ", end='')
+    n = int(input())
+    print("Введите количество ограничений: ", end='')
+    m = int(input())
 
-cel_func = []
+    cel_func = []
 
-print("Введите коэффициенты при переменных целевой функции:")
-for i in range(1, n + 1):
-    print("x" + str(i) + ": ", end='')
-    cel_func.append(float(input()))
-
-ogr = []
-
-for j in range(1, m + 1):
-    print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
-    ogr.append([0] * (n + 1))
+    print("Введите коэффициенты при переменных целевой функции:")
     for i in range(1, n + 1):
         print("x" + str(i) + ": ", end='')
-        ogr[j - 1][i - 1] = float(input())
-    print("Введите значение правой части ограничения " + str(j) + ": ", end='')
-    ogr[j - 1][n] = float(input())
+        cel_func.append(float(input()))
+
+    ogr = []
+
+    for j in range(1, m + 1):
+        print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
+        ogr.append([0] * (n + 1))
+        for i in range(1, n + 1):
+            print("x" + str(i) + ": ", end='')
+            ogr[j - 1][i - 1] = float(input())
+        print("Введите значение правой части ограничения " + str(j) + ": ", end='')
+        ogr[j - 1][n] = float(input())
 
 
-print("Получившаяся мат. модель:")
-print("Целевая функция: ", end='')
-for i in range(1, n + 1):
-    if cel_func[i-1] < 0:
-        if i != 1:
-            print("- ", end='')
-        else:
-            print("-", end='')
-    else:
-        if i != 1:
-            print("+ ", end='')
-    print(str(abs(cel_func[i-1])) + "x" + str(i) + " ", end='')
-print("-> min")
-
-print("Ограничения:")
-for j in range(1, m + 1):
+    print("Получившаяся мат. модель:")
+    print("Целевая функция: ", end='')
     for i in range(1, n + 1):
-        if ogr[j - 1][i - 1] < 0:
+        if cel_func[i-1] < 0:
             if i != 1:
                 print("- ", end='')
             else:
@@ -136,28 +123,56 @@ for j in range(1, m + 1):
         else:
             if i != 1:
                 print("+ ", end='')
-        print(str(abs(ogr[j - 1][i - 1])) + "x" + str(i) + " ", end='')
-    print("= " + str(ogr[j - 1][n]))
+        print(str(abs(cel_func[i-1])) + "x" + str(i) + " ", end='')
+    print("-> min")
+
+    print("Ограничения:")
+    for j in range(1, m + 1):
+        for i in range(1, n + 1):
+            if ogr[j - 1][i - 1] < 0:
+                if i != 1:
+                    print("- ", end='')
+                else:
+                    print("-", end='')
+            else:
+                if i != 1:
+                    print("+ ", end='')
+            print(str(abs(ogr[j - 1][i - 1])) + "x" + str(i) + " ", end='')
+        print("= " + str(ogr[j - 1][n]))
+
+    return n, m, cel_func, ogr
+
+def split_ogr(ogr, m, n):
+    # стобец БДР
+    bdr = []
+    for j in range(0, m):
+        bdr.append(ogr[j][n])
+    # матрица коэффициентов
+    array = [] # aij
+    for j in range(0, m):
+        array.append([0] * n)
+        for i in range(0, n):
+            array[j][i] = ogr[j][i]
+
+    return bdr, array
+
+def count_mis_vars(basis):
+    c = 0 # сколько переменных не хватает в базисе
+    for b in basis:
+        if b == 0:
+            c += 1
+    return c
+
+# ввод модели
+n, m, cel_func, ogr = input_model()
 
 # поиск базиса
 basis = find_basis(m, n, ogr)
 
-c = 0 # сколько переменных не хватает в базисе
-for i in range(0, m):
-    if basis[i] == 0:
-        c += 1
+c = count_mis_vars(basis)
 
 if (c == 0):    
-    # стобец БДР
-    bdr = []
-    for j in range(1, m + 1):
-        bdr.append(ogr[j - 1][n])
-    # матрица коэффициентов
-    array = [] # aij
-    for j in range(1, m + 1):
-        array.append([0] * n)
-        for i in range(1, n + 1):
-            array[j - 1][i - 1] = ogr[j - 1][i - 1]
+    bdr, array = split_ogr(ogr, m, n)
     # оценки
     delts = [0] * n
     decision.decision(m, n, bdr, array, basis, cel_func, delts)

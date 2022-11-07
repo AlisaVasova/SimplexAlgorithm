@@ -67,18 +67,18 @@ def print_table(basis, bdr, array, n, m, cel_func, delts):
 
     return True
 
-def is_there_solution(m, array, ved_stolb):
-    for j in range(1, m + 1):
-            if array[j - 1][ved_stolb - 1] > 0:
-                return True
+def is_there_solution(array, ved_stolb):
+    for stroka in array:
+        if stroka[ved_stolb] > 0:
+            return True
     return False
     
 def ved_stolbec(delts, n):
     max_st = 0
     ved_st = -1
-    for i in range(1, n + 1):
-        if delts[i - 1] > max_st:
-            max_st = delts[i - 1]
+    for i in range(0, n):
+        if delts[i] > max_st:
+            max_st = delts[i]
             ved_st = i
 
     return ved_st
@@ -86,10 +86,10 @@ def ved_stolbec(delts, n):
 def ved_stroka(array, ved_stolb, bdr, m):
     min_s = 0
     ved_s = -1
-    for j in range(1, m + 1):
-        if array[j - 1][ved_stolb - 1] > 0:
-            if ved_s == -1 or (bdr[j - 1] / array[j - 1][ved_stolb - 1]) < min_s:
-                min_s = bdr[j - 1] / array[j - 1][ved_stolb - 1]
+    for j in range(0, m):
+        if array[j][ved_stolb] > 0:
+            if ved_s == -1 or (bdr[j] / array[j][ved_stolb]) < min_s:
+                min_s = bdr[j] / array[j][ved_stolb]
                 ved_s = j
 
     return ved_s
@@ -100,8 +100,8 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
     is_there_solution_flag = True
     while True:
         flag = True
-        for i in range(1, n + 1):
-            if delts[i - 1] > 0:
+        for i in range(0, n):
+            if delts[i] > 0:
                 flag = False
                 break
         if flag == True:
@@ -109,14 +109,15 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
 
         ved_stolb = ved_stolbec(delts, n)
 
-        if is_there_solution(m, array, ved_stolb) == False: 
+        if is_there_solution(array, ved_stolb) == False: 
             is_there_solution_flag = False
             break
         
         ved_str = ved_stroka(array, ved_stolb, bdr, m)
 
-        basis[ved_str - 1] = ved_stolb
-        preobr(ved_str, ved_stolb, array, m, n, bdr, cel_func, delts, basis)
+        basis[ved_str] = ved_stolb + 1
+        array, bdr = preobr(ved_str, ved_stolb, array, m, n, bdr, cel_func, delts, basis)
+        print_table(basis, bdr, array, n, m, cel_func, delts)
 
     if is_there_solution_flag == False:
         print("Целевая функция не ограничена, нет решения")
@@ -130,27 +131,23 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
                 print("x" + str(i) + " = 0")
         return True
 
-def preobr(ved_str, ved_stolb, array, m, n, bdr, cel_func, delts, basis):
+def preobr(ved_str, ved_stolb, array, m, n, bdr):
     new_array = []
-    for j in range(1, m + 1):
+    for j in range(0, m):
         new_array.append([0] * n)
 
     new_bdr = [0] * m
 
-    for j in range(1, m + 1):
+    for j in range(0, m):
         if j != ved_str:
-            for i in range(1, n + 1):
-                new_array[j - 1][i - 1] = (array[j - 1][i - 1] * array[ved_str - 1][ved_stolb - 1] - array[ved_str - 1][i - 1] * array[j - 1][ved_stolb - 1]) / array[ved_str - 1][ved_stolb - 1]
+            for i in range(0, n):
+                new_array[j][i] = (array[j][i] * array[ved_str][ved_stolb] - array[ved_str][i] * array[j][ved_stolb]) / array[ved_str][ved_stolb]
         
-            new_bdr[j - 1] = (bdr[j - 1] * array[ved_str - 1][ved_stolb - 1] - bdr[ved_str - 1] * array[j - 1][ved_stolb - 1]) / array[ved_str - 1][ved_stolb - 1]
+            new_bdr[j] = (bdr[j] * array[ved_str][ved_stolb] - bdr[ved_str] * array[j][ved_stolb]) / array[ved_str][ved_stolb]
         else:
-            for i in range(1, n + 1):
-                new_array[j - 1][i - 1] = array[j - 1][i - 1] / array[ved_str - 1][ved_stolb - 1]
-            new_bdr[j - 1] = bdr[j - 1] / array[ved_str - 1][ved_stolb - 1]
+            for i in range(0, n):
+                new_array[j][i] = array[j][i] / array[ved_str][ved_stolb]
+            new_bdr[j] = bdr[j] / array[ved_str1][ved_stolb]
 
-    for j in range(1, m + 1):
-        for i in range(1, n + 1):
-            array[j - 1][i - 1] = new_array[j - 1][i - 1]
-        bdr[j - 1] = new_bdr[j - 1]
-    print_table(basis, bdr, array, n, m, cel_func, delts)
+    return (new_array, new_bdr)
 
