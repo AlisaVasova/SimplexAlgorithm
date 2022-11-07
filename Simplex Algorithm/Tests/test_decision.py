@@ -18,7 +18,7 @@ def test_print_table():
     assert decision.print_table(basis, bdr, array, n, m, cel_func, delts) == True
 
 def test_is_ved_st():
-   assert decision.ved_stolbec([2,3], 2) == 2
+   assert decision.ved_stolbec([2,3], 2) == 1
 
 def test_is_not_ved_st():
    assert decision.ved_stolbec([-1,-2], 2) == -1
