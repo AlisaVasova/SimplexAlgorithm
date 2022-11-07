@@ -28,8 +28,8 @@ def test_preobr():
     m = 2
     array = [[1, 0, 2, 1],[4, 1, 6, 0]]
     bdr = [4, 14]
-    ved_str = 0
-    ved_stolb = 1
+    ved_str = 1
+    ved_stolb = 2
     
     array, bdr = decision.preobr(ved_str, ved_stolb, array, m, n, bdr)
 

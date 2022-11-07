@@ -116,7 +116,7 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
         ved_str = ved_stroka(array, ved_stolb, bdr, m)
 
         basis[ved_str] = ved_stolb + 1
-        array, bdr = preobr(ved_str, ved_stolb, array, m, n, bdr, cel_func, delts, basis)
+        array, bdr = preobr(ved_str, ved_stolb, array, m, n, bdr)
         print_table(basis, bdr, array, n, m, cel_func, delts)
 
     if is_there_solution_flag == False:
