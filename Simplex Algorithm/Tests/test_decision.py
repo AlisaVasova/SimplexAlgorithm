@@ -18,10 +18,10 @@ def test_print_table():
     assert decision.print_table(basis, bdr, array, n, m, cel_func, delts) == True
 
 def test_is_ved_st():
-   assert decision.ved_stolbec([2,3], 2) == 2
+   assert decision.ved_stolbec([2,3], 1) == 2
 
 def test_is_not_ved_st():
-   assert decision.ved_stolbec([-1,-2], 2) == -1
+   assert decision.ved_stolbec([-1,-2], 1) == -1
 
 def test_preobr():
     n = 4
@@ -31,8 +31,8 @@ def test_preobr():
     bdr = [4, 14]
     basis = [2, 4]
     delts = [0,0,0,0]
-    ved_str = 1
-    ved_stolb = 2
+    ved_str = 0
+    ved_stolb = 1
     
     array, bdr = decision.preobr(ved_str, ved_stolb, array, m, n, bdr, cel_func, delts, basis)
 
