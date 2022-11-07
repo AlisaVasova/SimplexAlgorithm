@@ -147,7 +147,7 @@ def preobr(ved_str, ved_stolb, array, m, n, bdr):
         else:
             for i in range(0, n):
                 new_array[j][i] = array[j][i] / array[ved_str][ved_stolb]
-            new_bdr[j] = bdr[j] / array[ved_str1][ved_stolb]
+            new_bdr[j] = bdr[j] / array[ved_str][ved_stolb]
 
     return (new_array, new_bdr)
 
