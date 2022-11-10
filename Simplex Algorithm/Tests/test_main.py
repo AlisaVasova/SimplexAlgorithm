@@ -1,4 +1,4 @@
-import main
+from main import input_model
 from unittest.mock import patch
 from unittest.mock import call
 
@@ -26,17 +26,10 @@ class MockInputFunction:
     def __exit__(self, type, value, traceback):
         __builtins__['input'] = self._orig_input_fn
 
-def some_func():
-    input()
-    binstr = input()
-    changes= 1
-    # Clever stuff
-    return changes
-
-
-def test_case1():
-    with MockInputFunction(side_effect=["","1101110"]):
-        changes = some_func()
-    print(changes)
-
-    assert changes == 1
+def test_input():
+    with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"]):
+        n, m, cel_func, ogr = main.input_model()
+    assert n == 4
+    assert m == 2
+    assert cel_func == [1, 2, 3, 4]
+    assert ogr == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
