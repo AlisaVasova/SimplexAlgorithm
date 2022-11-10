@@ -56,7 +56,7 @@ def artificial_basis(c, n, m, ogr, basis):
 
     return m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop
 
-def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, delts_dop, basis_dop):
+def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop):
     # проверяем получившееся решение
     basis = basis_dop
 
@@ -99,22 +99,23 @@ def count_mis_vars(basis):
     return c
 
 def input_model():
+    error_str = "Ошибка ввода. Попробуйте еще раз."
     # ввод данных
     while True:
         print("Введите количество переменных: ", end='')
         try:
             n = int(input())
             break
-        except:
-            print("Ошибка ввода. Попробуйте еще раз.")
+        except ValueError:
+            print(error_str)
 
     while True:
         print("Введите количество ограничений: ", end='')
         try:
             m = int(input())
             break
-        except:
-            print("Ошибка ввода. Попробуйте еще раз.")
+        except ValueError:
+            print(error_str)
 
     while True:
         try:
@@ -125,8 +126,8 @@ def input_model():
                 print("x" + str(i) + ": ", end='')
                 cel_func.append(float(input()))
             break
-        except:
-            print("Ошибка ввода. Попробуйте еще раз.")
+        except ValueError:
+            print(error_str)
 
     while True:
         try:
@@ -142,8 +143,8 @@ def input_model():
                 ogr[j - 1][n] = float(input())
 
             break
-        except:
-            print("Ошибка ввода. Попробуйте еще раз.")
+        except ValueError:
+            print(error_str)
 
     print("Получившаяся мат. модель:")
     print("Целевая функция: ", end='')
@@ -193,7 +194,7 @@ def main():
         # решаем вспомогательную задачу
         flag, bdr_dec, basis_dec = decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop)
         if (flag == True):
-            m, n, bdr, array, basis, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, delts_dop, basis_dop)
+            m, n, bdr, array, basis, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop)
 
             # решаем исходную задачу
             flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
