@@ -26,7 +26,7 @@ class MockInputFunction:
         __builtins__['input'] = self._orig_input_fn
 
 def test_input():
-    with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+    with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", ""]):
         from main import input_model
         n, m, cel_func, ogr = input_model()
     assert n == 4
