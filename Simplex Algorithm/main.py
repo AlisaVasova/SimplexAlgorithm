@@ -98,49 +98,36 @@ def count_mis_vars(basis):
             c += 1
     return c
 
-# ввод данных
-print("Введите количество переменных: ", end='')
-n = int(input())
-print("Введите количество ограничений: ", end='')
-m = int(input())
+def input_model():
+    # ввод данных
+    print("Введите количество переменных: ", end='')
+    n = int(input())
+    print("Введите количество ограничений: ", end='')
+    m = int(input())
 
-cel_func = []
+    cel_func = []
 
-print("Введите коэффициенты при переменных целевой функции:")
-for i in range(1, n + 1):
-    print("x" + str(i) + ": ", end='')
-    cel_func.append(float(input()))
-
-ogr = []
-
-for j in range(1, m + 1):
-    print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
-    ogr.append([0] * (n + 1))
+    print("Введите коэффициенты при переменных целевой функции:")
     for i in range(1, n + 1):
         print("x" + str(i) + ": ", end='')
-        ogr[j - 1][i - 1] = float(input())
-    print("Введите значение правой части ограничения " + str(j) + ": ", end='')
-    ogr[j - 1][n] = float(input())
+        cel_func.append(float(input()))
+
+    ogr = []
+
+    for j in range(1, m + 1):
+        print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
+        ogr.append([0] * (n + 1))
+        for i in range(1, n + 1):
+            print("x" + str(i) + ": ", end='')
+            ogr[j - 1][i - 1] = float(input())
+        print("Введите значение правой части ограничения " + str(j) + ": ", end='')
+        ogr[j - 1][n] = float(input())
 
 
-print("Получившаяся мат. модель:")
-print("Целевая функция: ", end='')
-for i in range(1, n + 1):
-    if cel_func[i-1] < 0:
-        if i != 1:
-            print("- ", end='')
-        else:
-            print("-", end='')
-    else:
-        if i != 1:
-            print("+ ", end='')
-    print(str(abs(cel_func[i-1])) + "x" + str(i) + " ", end='')
-print("-> min")
-
-print("Ограничения:")
-for j in range(1, m + 1):
+    print("Получившаяся мат. модель:")
+    print("Целевая функция: ", end='')
     for i in range(1, n + 1):
-        if ogr[j - 1][i - 1] < 0:
+        if cel_func[i-1] < 0:
             if i != 1:
                 print("- ", end='')
             else:
@@ -148,9 +135,26 @@ for j in range(1, m + 1):
         else:
             if i != 1:
                 print("+ ", end='')
-        print(str(abs(ogr[j - 1][i - 1])) + "x" + str(i) + " ", end='')
-    print("= " + str(ogr[j - 1][n]))
+        print(str(abs(cel_func[i-1])) + "x" + str(i) + " ", end='')
+    print("-> min")
 
+    print("Ограничения:")
+    for j in range(1, m + 1):
+        for i in range(1, n + 1):
+            if ogr[j - 1][i - 1] < 0:
+                if i != 1:
+                    print("- ", end='')
+                else:
+                    print("-", end='')
+            else:
+                if i != 1:
+                    print("+ ", end='')
+            print(str(abs(ogr[j - 1][i - 1])) + "x" + str(i) + " ", end='')
+        print("= " + str(ogr[j - 1][n]))
+
+    return n, m, cel_func, ogr
+
+n, m, cel_func, ogr = input_model()
 # поиск базиса
 basis = find_basis(m, n, ogr)
 
