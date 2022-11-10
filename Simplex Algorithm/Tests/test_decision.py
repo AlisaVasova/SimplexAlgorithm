@@ -42,7 +42,7 @@ def test_is_decision():
     delts = [0,0,0,0]
     flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     assert flag  == True
-    assert (bdr == [1, 2]) and (basis == [3, 1]) or (bdr == [2, 1]) and  (basis == [1, 3])
+    assert (bdr_dec == [1, 2]) and (basis_dec == [3, 1]) or (bdr_dec == [2, 1]) and  (basis_dec == [1, 3])
     
 def test_is_not_decision():
     n = 4
