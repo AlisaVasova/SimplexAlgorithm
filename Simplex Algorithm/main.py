@@ -154,25 +154,26 @@ def input_model():
 
     return n, m, cel_func, ogr
 
-n, m, cel_func, ogr = input_model()
-# поиск базиса
-basis = find_basis(m, n, ogr)
+if name == "main":
+    n, m, cel_func, ogr = input_model()
+    # поиск базиса
+    basis = find_basis(m, n, ogr)
 
-c = count_mis_vars(basis)
+    c = count_mis_vars(basis)
 
-if (c == 0):    
-    bdr, array = split_ogr(ogr, m, n)
-    # оценки
-    delts = [0] * n
-    decision.decision(m, n, bdr, array, basis, cel_func, delts)
-else:
-    m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, ogr, basis)
-
-    # решаем вспомогательную задачу
-    if (decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop) == True):
-        m, n, bdr, array, basis, cel_func, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis_dop)
-
-        # решаем исходную задачу
+    if (c == 0):    
+        bdr, array = split_ogr(ogr, m, n)
+        # оценки
+        delts = [0] * n
         decision.decision(m, n, bdr, array, basis, cel_func, delts)
+    else:
+        m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, ogr, basis)
+
+        # решаем вспомогательную задачу
+        if (decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop) == True):
+            m, n, bdr, array, basis, cel_func, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis_dop)
+
+            # решаем исходную задачу
+            decision.decision(m, n, bdr, array, basis, cel_func, delts)
     
 
