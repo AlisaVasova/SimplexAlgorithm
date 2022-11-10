@@ -1,5 +1,4 @@
 import decision
-from unittest.mock import patch
 
 def test_is_sol():
    assert decision.is_there_solution([[1, 1],[0,0]], 0) == True
