@@ -38,7 +38,7 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest pytest-cov
-        python -m pytest --capture=sys --cov=. --cov-report xml
+        python -m pytest --capture=tee-sys --cov=. --cov-report xml
     
     - name: Covert Coverage Results
       run: |
