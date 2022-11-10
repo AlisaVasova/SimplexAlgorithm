@@ -154,7 +154,7 @@ def input_model():
 
     return n, m, cel_func, ogr
 
-if name == "main":
+if __name__ == "__main__":
     n, m, cel_func, ogr = input_model()
     # поиск базиса
     basis = find_basis(m, n, ogr)
