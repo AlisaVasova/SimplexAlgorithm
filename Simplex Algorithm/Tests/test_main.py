@@ -13,10 +13,7 @@ class MockInputFunction:
             if self.side_effect is None\
             else self.side_effect[len(self.mock_calls)]
         self.mock_calls.append(call(prompt))
-        if prompt:
-            print(prompt + str(return_value))
-        else:
-            print(str(return_value))
+        print(str(return_value))
         return return_value
 
     def __enter__(self):
