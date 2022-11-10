@@ -27,7 +27,7 @@ class MockInputFunction:
         __builtins__['input'] = self._orig_input_fn
 
 def test_input():
-    with MockInputFunction(side_effect=['4\n', '2\n', '1\n', '2\n', '3\n', '4\n', '1\n', '2\n', '3\n', '4\n', '5\n', '6\n', '7\n', '8\n', '9\n', '10\n']):
+    with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
         n, m, cel_func, ogr = main.input_model()
         assert n == 4
         assert m == 2
