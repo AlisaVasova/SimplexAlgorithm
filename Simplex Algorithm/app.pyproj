@@ -5,7 +5,7 @@
     <ProjectGuid>0df4d1c0-b0df-47e8-93eb-8e406d168755</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>program.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,7 +25,7 @@
     <Compile Include="decision.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="main.py" />
+    <Compile Include="program.py" />
     <Compile Include="__init__.py">
       <SubType>Code</SubType>
     </Compile>
