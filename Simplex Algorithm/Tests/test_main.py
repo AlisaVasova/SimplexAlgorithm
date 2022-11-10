@@ -38,5 +38,4 @@ def test_case1():
     with MockInputFunction(side_effect=["","1101110"]):
         changes = some_func()
     print(changes)
-
     assert changes == 1
