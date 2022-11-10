@@ -31,4 +31,4 @@ def test_input():
     assert n == 4
     assert m == 2
     assert cel_func == [1, 2, 3, 4]
-    assert ogr == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    assert ogr == [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
