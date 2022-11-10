@@ -40,8 +40,10 @@ def test_is_decision():
     bdr = [4, 14]
     basis = [2, 4]
     delts = [0,0,0,0]
-    assert decision.decision(m, n, bdr, array, basis, cel_func, delts) == True
-
+    flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
+    assert flag  == True
+    assert (bdr == [1, 2]) and (basis == [3, 1]) or (bdr == [2, 1]) and  (basis == [1, 3])
+    
 def test_is_not_decision():
     n = 4
     m = 2
@@ -50,4 +52,4 @@ def test_is_not_decision():
     bdr = [10, 40]
     basis = [3, 4]
     delts = [0,0,0,0]
-    assert decision.decision(m, n, bdr, array, basis, cel_func, delts) == False
+    assert decision.decision(m, n, bdr, array, basis, cel_func, delts)[0] == False

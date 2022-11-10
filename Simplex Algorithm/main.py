@@ -56,7 +56,7 @@ def artificial_basis(c, n, m, ogr, basis):
 
     return m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop
 
-def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis_dop):
+def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, delts_dop, basis_dop):
     # проверяем получившееся решение
     basis = basis_dop
 
@@ -75,7 +75,7 @@ def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, del
     # оценки
     delts = [0] * n
 
-    return m, n, bdr_dop, array_dop, basis, cel_func, delts
+    return m, n, bdr_dop, array_dop, basis, delts
 
 def split_ogr(ogr, m, n):
     # стобец БДР
@@ -100,29 +100,50 @@ def count_mis_vars(basis):
 
 def input_model():
     # ввод данных
-    print("Введите количество переменных: ", end='')
-    n = int(input())
-    print("Введите количество ограничений: ", end='')
-    m = int(input())
+    while True:
+        print("Введите количество переменных: ", end='')
+        try:
+            n = int(input())
+            break
+        except:
+            print("Ошибка ввода. Попробуйте еще раз.")
 
-    cel_func = []
+    while True:
+        print("Введите количество ограничений: ", end='')
+        try:
+            m = int(input())
+            break
+        except:
+            print("Ошибка ввода. Попробуйте еще раз.")
 
-    print("Введите коэффициенты при переменных целевой функции:")
-    for i in range(1, n + 1):
-        print("x" + str(i) + ": ", end='')
-        cel_func.append(float(input()))
+    while True:
+        try:
+            cel_func = []
 
-    ogr = []
+            print("Введите коэффициенты при переменных целевой функции:")
+            for i in range(1, n + 1):
+                print("x" + str(i) + ": ", end='')
+                cel_func.append(float(input()))
+            break
+        except:
+            print("Ошибка ввода. Попробуйте еще раз.")
 
-    for j in range(1, m + 1):
-        print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
-        ogr.append([0] * (n + 1))
-        for i in range(1, n + 1):
-            print("x" + str(i) + ": ", end='')
-            ogr[j - 1][i - 1] = float(input())
-        print("Введите значение правой части ограничения " + str(j) + ": ", end='')
-        ogr[j - 1][n] = float(input())
+    while True:
+        try:
+            ogr = []
 
+            for j in range(1, m + 1):
+                print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
+                ogr.append([0] * (n + 1))
+                for i in range(1, n + 1):
+                    print("x" + str(i) + ": ", end='')
+                    ogr[j - 1][i - 1] = float(input())
+                print("Введите значение правой части ограничения " + str(j) + ": ", end='')
+                ogr[j - 1][n] = float(input())
+
+            break
+        except:
+            print("Ошибка ввода. Попробуйте еще раз.")
 
     print("Получившаяся мат. модель:")
     print("Целевая функция: ", end='')
@@ -154,7 +175,7 @@ def input_model():
 
     return n, m, cel_func, ogr
 
-if __name__ == "__main__":
+def main():
     n, m, cel_func, ogr = input_model()
     # поиск базиса
     basis = find_basis(m, n, ogr)
@@ -165,15 +186,18 @@ if __name__ == "__main__":
         bdr, array = split_ogr(ogr, m, n)
         # оценки
         delts = [0] * n
-        decision.decision(m, n, bdr, array, basis, cel_func, delts)
+        flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     else:
         m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, ogr, basis)
 
         # решаем вспомогательную задачу
-        if (decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop) == True):
-            m, n, bdr, array, basis, cel_func, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, cel_func_dop, delts_dop, basis_dop)
+        flag, bdr_dec, basis_dec = decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop)
+        if (flag == True):
+            m, n, bdr, array, basis, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, delts_dop, basis_dop)
 
             # решаем исходную задачу
-            decision.decision(m, n, bdr, array, basis, cel_func, delts)
-    
+            flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
+
+if __name__ == "__main__":
+    main()
 
