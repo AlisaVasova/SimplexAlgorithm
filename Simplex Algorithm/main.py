@@ -101,16 +101,16 @@ def count_mis_vars(basis):
 def input_model():
     # ввод данных
     print("Введите количество переменных: ", end='')
-    n = int(raw_input())
+    n = int(input())
     print("Введите количество ограничений: ", end='')
-    m = int(raw_input())
+    m = int(input())
 
     cel_func = []
 
     print("Введите коэффициенты при переменных целевой функции:")
     for i in range(1, n + 1):
         print("x" + str(i) + ": ", end='')
-        cel_func.append(float(raw_input()))
+        cel_func.append(float(input()))
 
     ogr = []
 
@@ -119,9 +119,9 @@ def input_model():
         ogr.append([0] * (n + 1))
         for i in range(1, n + 1):
             print("x" + str(i) + ": ", end='')
-            ogr[j - 1][i - 1] = float(raw_input())
+            ogr[j - 1][i - 1] = float(input())
         print("Введите значение правой части ограничения " + str(j) + ": ", end='')
-        ogr[j - 1][n] = float(raw_input())
+        ogr[j - 1][n] = float(input())
 
 
     print("Получившаяся мат. модель:")
