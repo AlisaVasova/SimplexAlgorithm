@@ -66,14 +66,14 @@ def test_reverse_in_basis_not_art():
    assert basis == [2,3,1]
     
 def test_reverse_in_basis_is_art():
-   n = 4
-   m = 3
-   array_dop = [[0,1,0,0,2,-1],[0,0,1,-1,-4,3],[1,0,0,1,-3,2]]
-   n_dop = 6
-   bdr_dop = [0,5,2]
-   basis_dop = [2,3,1]
-   with patch('decision.preobr', side_effect=[(None,None)]) as preobr:
+   n = 3
+   m = 2
+   array_dop = [[2,0,1,1],[6,1,4,0]]
+   n_dop = 4
+   bdr_dop = [4,14]
+   basis_dop = [4,2]
+   with patch('decision.preobr', side_effect=[([[1,0,0.5,0.5],[0,1,1,-3]],[2,2])]) as preobr:
        bdr, array, basis = main.reverse_transition(n, m, array_dop, n_dop, bdr_dop, basis_dop)
-   assert bdr == [0,5,2]
-   assert array == [[0,1,0,0],[0,0,1,-1],[1,0,0,1]]
-   assert basis == [2,3,1]
+   assert bdr == [2,2]
+   assert array == [[1,0,0.5,0.5],[0,1,1,-3]]
+   assert basis == [1,2]
