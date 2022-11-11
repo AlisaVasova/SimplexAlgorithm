@@ -12,7 +12,7 @@ def test_print_table():
     cel_func = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     array = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
     bdr = [4, 14]
-    basis = [2, 4]
+    basis = [2, 10]
     delts = [0]*10
     assert decision.print_table(basis, bdr, array, n, m, cel_func, delts) == True
 

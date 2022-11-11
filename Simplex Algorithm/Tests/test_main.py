@@ -33,11 +33,11 @@ def test_input():
     assert bdr == [5, 10]
 
 def test_wrong_input():
-    with MockInputFunction(side_effect=["-1", "0", "4", "-1", "0", "2", "", "1", "2", "3", "4", "a","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+    with MockInputFunction(side_effect=["-1", "0", "", "4", "-1", "0", " ", "2", "", "1", "2", "3", "4", "a","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
         n, m, cel_func, array, bdr = main.input_model()
     assert n == 4
     assert m == 2
-    assert cel_func == [1, 2, 3, 4]
+    assert cel_func == [-1, 2, -3, 4]
     assert array == [[1, 2, 3, 4], [6, 7, 8, 9]]
     assert bdr == [5, 10]
 
@@ -98,7 +98,7 @@ def test_all_mis_var():
     basis = [0, 0, 0]
     assert main.count_mis_vars(basis) == 3
 
-def test_main():
+def test_main_with_art_basis():
     with MockInputFunction(side_effect=["4", "3", "3", "1", "1", "0", "1", "2", "0", "1", "2", "-2", "-1", "1", "-3", "1", "2", "3", "0", "2", "4"]):
         flag, bdr, basis = main.main()
     assert flag == True    
@@ -106,3 +106,11 @@ def test_main():
     assert bdr[basis.index(2)] == 0
     assert bdr[basis.index(3)] == 7
     assert bdr[basis.index(4)] == 2
+
+def test_main():
+    with MockInputFunction(side_effect=["4", "2", "1", "2", "0", "3", "1", "0", "2", "1", "4", "4", "1", "6", "0", "14"]):
+        flag, bdr, basis = main.main()
+    assert flag == True    
+    assert (1 in basis) and (3 in basis)   
+    assert bdr[basis.index(1)] == 2
+    assert bdr[basis.index(3)] == 1
