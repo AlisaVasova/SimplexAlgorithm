@@ -76,6 +76,8 @@ def is_there_solution(array, ved_stolb):
 def ved_stolbec(delts, n):
     max_st = 0
     ved_st = -1
+    if n < 1 or len(delts) < n:
+        return None
     for i in range(0, n):
         if delts[i] > max_st:
             max_st = delts[i]
@@ -86,6 +88,9 @@ def ved_stolbec(delts, n):
 def ved_stroka(array, ved_stolb, bdr, m):
     min_s = 0
     ved_s = -1
+
+    if m < 1 or len(array) < m or len(bdr) < m:
+        return None
     for j in range(0, m):
         if array[j][ved_stolb] > 0:
             if ved_s == -1 or (bdr[j] / array[j][ved_stolb]) < min_s:

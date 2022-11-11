@@ -25,6 +25,9 @@ def test_is_not_ved_st():
 def test_is_ved_st_some_otr():
    assert decision.ved_stolbec([1,-2], 2) == 0
 
+def test_neg_ved_st():
+   assert decision.ved_stolbec([], 2) == None
+
 def test_is_ved_str_some_otr():
     assert decision.ved_stroka([[3, -2],[3,3]], 1, [2,2], 2) == 1
 
@@ -33,6 +36,9 @@ def test_is_not_ved_str():
 
 def test_is_ved_str():
     assert decision.ved_stroka([[3, 3],[3,2]], 1, [2,2], 2) == 0
+
+def test_neg_ved_str():
+    assert decision.ved_stroka([]], -1, [2,2], 2) == None
 
 def test_preobr():
     n = 4
