@@ -25,7 +25,6 @@ def artificial_basis(c, n, m, array, bdr, basis):
     print('Поиск базиса с помощью метода искусственного базиса.')
     print('Добавляем переменных: ' + str(c))
     n_dop = n + c
-    m_dop = m
     cel_func_dop = []
     array_dop = []
     # новые ограничения
@@ -49,7 +48,7 @@ def artificial_basis(c, n, m, array, bdr, basis):
     # оценки
     delts_dop = [0] * n_dop
 
-    return m_dop, n_dop, bdr, array_dop, cel_func_dop, delts_dop
+    return n_dop, array_dop, cel_func_dop, delts_dop
 
 def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop):
     # проверяем получившееся решение
@@ -64,13 +63,13 @@ def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop):
                     ved_str = l
                     ved_stolb = k
                     basis[ved_str] = ved_stolb + 1
-                    decision.preobr(ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_dop)
+                    array, bdr = decision.preobr(ved_str, ved_stolb, array_dop, m_dop, n_dop, bdr_dop)
                     break;
 
     # оценки
     delts = [0] * n
 
-    return m, n, bdr_dop, array_dop, basis, delts
+    return m, n, bdr, array, basis, delts
 
 def count_mis_vars(basis):
     c = 0 # сколько переменных не хватает в базисе
@@ -170,13 +169,13 @@ def main():
         delts = [0] * n
         flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     else:
-        m_dop, n_dop, bdr_dop, array_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, array, bdr, basis)
-        basis_dop = find_basis(m_dop, n_dop, array_dop)
+        n_dop, array_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, array, bdr, basis)
+        basis_dop = find_basis(m, n_dop, array_dop)
 
         # решаем вспомогательную задачу
-        flag, bdr_dec, basis_dec = decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop)
+        flag, bdr_dec, basis_dec = decision.decision(m, n_dop, bdr, array_dop, basis_dop, cel_func_dop, delts_dop)
         if (flag == True):
-            m, n, bdr, array, basis, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop)
+            m, n, bdr, array, basis, delts = reverse_transition(n, m, array_dop, m_dop, n_dop, bdr, basis_dop)
 
             # решаем исходную задачу
             flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
