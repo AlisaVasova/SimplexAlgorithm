@@ -50,4 +50,3 @@ def test_art_basis():
    assert n_dop == 7 
    assert array_dop == [[1,0,0,1,0,6,0],[3,1,-4,0,0,2,1],[1,2,0,0,1,2,0]]
    assert cel_func_dop == [0,0,0,0,0,0,1]
-   assert delts_dop == [0,0,0,0,0,0,0]
