@@ -93,6 +93,8 @@ def test_all_mis_var():
 def test_main():
     with MockInputFunction(side_effect=["4", "3", "3", "1", "1", "0", "1", "2", "0", "1", "2", "-2", "-1", "1", "-3", "1", "2", "3", "0", "2", "4"]):
         flag, bdr, basis = main.main()
-    assert flag == True
-    assert bdr == [0,7,2]
-    assert basis == [2, 3, 4]
+    assert flag == True    
+    assert (2 in basis) and (3 in basis) and (4 in basis)    
+    assert bdr[basis.index(2)] == 0
+    assert bdr[basis.index(3)] == 7
+    assert bdr[basis.index(4)] == 2
