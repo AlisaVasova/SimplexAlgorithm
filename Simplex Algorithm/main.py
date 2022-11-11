@@ -46,13 +46,10 @@ def artificial_basis(c, n, m, array, bdr, basis):
         cel_func_dop.append(0)
     for i in range(0, c):
         cel_func_dop.append(1)
-    # строим стобец БДР
-    bdr_dop = bdr
-    basis_dop = find_basis(m_dop, n_dop, array_dop)
     # оценки
     delts_dop = [0] * n_dop
 
-    return m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop
+    return m_dop, n_dop, bdr, array_dop, cel_func_dop, delts_dop
 
 def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop):
     # проверяем получившееся решение
@@ -148,7 +145,7 @@ def input_model():
     print("Ограничения:")
     for j in range(1, m + 1):
         for i in range(1, n + 1):
-            if ogr[j - 1][i - 1] < 0:
+            if array[j - 1][i - 1] < 0:
                 if i != 1:
                     print("- ", end='')
                 else:
@@ -156,15 +153,15 @@ def input_model():
             else:
                 if i != 1:
                     print("+ ", end='')
-            print(str(abs(ogr[j - 1][i - 1])) + "x" + str(i) + " ", end='')
-        print("= " + str(ogr[j - 1][n]))
+            print(str(abs(array[j - 1][i - 1])) + "x" + str(i) + " ", end='')
+        print("= " + str(bdr[j - 1]))
 
     return n, m, cel_func, array, bdr
 
 def main():
     n, m, cel_func, array, bdr = input_model()
     # поиск базиса
-    basis = find_basis(m, n, array, bdr)
+    basis = find_basis(m, n, array)
 
     c = count_mis_vars(basis)
 
@@ -173,7 +170,8 @@ def main():
         delts = [0] * n
         flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     else:
-        m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, array, bdr, basis)
+        m_dop, n_dop, bdr_dop, array_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, array, bdr, basis)
+        basis_dop = find_basis(m_dop, n_dop, array_dop)
 
         # решаем вспомогательную задачу
         flag, bdr_dec, basis_dec = decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop)
