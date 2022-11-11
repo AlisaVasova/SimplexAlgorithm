@@ -7,10 +7,10 @@ def test_is_not_sol():
    assert decision.is_there_solution([[-1, -1],[-2,-2]], 0) == False
 
 def test_print_table():
-    n = 4
+    n = 10
     m = 2
-    cel_func = [1, 2, 0, 3]
-    array = [[1, 0, 2, 1],[4, 1, 6, 0]]
+    cel_func = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    array = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
     bdr = [4, 14]
     basis = [2, 4]
     delts = [0,0,0,0]
