@@ -94,5 +94,5 @@ def test_main():
     with MockInputFunction(side_effect=["4", "3", "3", "1", "1", "0", "1", "2", "0", "1", "2", "-2", "-1", "1", "-3", "1", "2", "3", "0", "2", "4"]):
         flag, bdr, basis = main.main()
     assert flag == True
-    assert bdr = [0,7,2]
+    assert bdr == [0,7,2]
     assert basis == [2, 3, 4]
