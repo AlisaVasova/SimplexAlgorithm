@@ -30,7 +30,7 @@ def artificial_basis(c, n, m, array, bdr, basis):
     # новые ограничения
     q = 0 # сколько переменных внесли
     for i in range(0, m): # для каждого ограничения
-        array_dop.append([0] * (n_dop + 1))
+        array_dop.append([0] * (n_dop))
         for j in range(0, n):
             array_dop[i][j] = array[i][j]
         for j in range(0, c):
