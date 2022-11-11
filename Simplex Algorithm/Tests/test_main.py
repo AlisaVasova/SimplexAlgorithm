@@ -77,3 +77,15 @@ def test_reverse_in_basis_is_art():
    assert bdr == [2,2]
    assert array == [[1,0,0.5,0.5],[0,1,1,-3]]
    assert basis == [1,2]
+
+def test_is_mis_var():
+    basis = [2, 0, 0]
+    assert main.count_mis_vars(basis) == 2
+
+def test_is_not_mis_var():
+    basis = [2, 1, 3]
+    assert main.count_mis_vars(basis) == 0
+
+def test_all_mis_var():
+    basis = [0, 0, 0]
+    assert main.count_mis_vars(basis) == 3

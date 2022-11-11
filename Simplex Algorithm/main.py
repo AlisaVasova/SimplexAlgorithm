@@ -87,7 +87,10 @@ def input_model():
         print("Введите количество переменных: ", end='')
         try:
             n = int(input())
-            break
+            if n < 1:
+                print(error_str)
+            else:
+                break
         except ValueError:
             print(error_str)
 
@@ -95,7 +98,10 @@ def input_model():
         print("Введите количество ограничений: ", end='')
         try:
             m = int(input())
-            break
+            if m < 1:
+                print(error_str)
+            else:
+                break
         except ValueError:
             print(error_str)
 
