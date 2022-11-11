@@ -40,8 +40,6 @@ def test_not_full_basis():
     basis = main.find_basis(2, 3, [[1, 2, 5], [0, 3, 1]])
     assert basis == [1, 0]
 
-def test_
-
 def test_art_basis():
    c = 1
    n = 6
