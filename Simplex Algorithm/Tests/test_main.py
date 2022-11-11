@@ -60,7 +60,7 @@ def test_reverse_in_basis_not_art():
    bdr_dop = [0,5,2]
    basis_dop = [2,3,1]
    with patch('decision.preobr', side_effect=[(None,None)]) as preobr:
-       bdr, array, basis = main.reverce_transition(n, m, array_dop, n_dop, bdr_dop, basis_dop)
+       bdr, array, basis = main.reverse_transition(n, m, array_dop, n_dop, bdr_dop, basis_dop)
    assert bdr == [0,5,2]
    assert array == [[0,1,0,0],[0,0,1,-1],[1,0,0,1]]
    assert basis ==[2,3,1]
