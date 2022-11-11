@@ -33,7 +33,7 @@ def test_input():
     assert bdr == [5, 10]
 
 def test_full_basis():
-    basis = main.find_basis(2, 3, [[6, 1, 2, 0], [-2, 0, 3, 1]])
+    basis = main.find_basis(2, 4, [[6, 1, 2, 0], [-2, 0, 3, 1]])
     assert basis == [2, 4]
 
 def test_not_full_basis():
