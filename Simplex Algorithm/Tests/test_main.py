@@ -98,6 +98,31 @@ def test_all_mis_var():
     basis = [0, 0, 0]
     assert main.count_mis_vars(basis) == 3
 
+def test_intgr_reverse_in_basis_not_art():
+   n = 4
+   m = 3
+   array_dop = [[0,1,0,0,2,-1],[0,0,1,-1,-4,3],[1,0,0,1,-3,2]]
+   n_dop = 6
+   bdr_dop = [0,5,2]
+   basis_dop = [2,3,1]
+   bdr, array, basis = main.reverse_transition(n, m, array_dop, n_dop, bdr_dop, basis_dop)
+   assert bdr == [0,5,2]
+   assert array == [[0,1,0,0],[0,0,1,-1],[1,0,0,1]]
+   assert basis == [2,3,1]
+    
+def test_intgr_reverse_in_basis_is_art():
+   n = 3
+   m = 2
+   array_dop = [[2,0,1,1],[6,1,4,0]]
+   n_dop = 4
+   bdr_dop = [4,14]
+   basis_dop = [4,2]
+   bdr, array, basis = main.reverse_transition(n, m, array_dop, n_dop, bdr_dop, basis_dop)
+   assert bdr == [2,2]
+   assert array == [[1,0,0.5,0.5],[0,1,1,-3]]
+   assert basis == [1,2]
+
+
 def test_main_with_art_basis():
     with MockInputFunction(side_effect=["4", "3", "3", "1", "1", "0", "1", "2", "0", "1", "2", "-2", "-1", "1", "-3", "1", "2", "3", "0", "2", "4"]):
         flag, bdr, basis = main.main()
