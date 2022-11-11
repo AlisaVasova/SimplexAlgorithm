@@ -31,7 +31,7 @@ def test_input():
     assert ogr == [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
 
 def test_full_basis():
-    basis = main.find_basis(3, 2, [[1, 2, 0], [0, 3, 1]])
+    basis = main.find_basis(2, 3, [[1, 2, 0], [0, 3, 1]])
     assert basis == [1, 3]
 
 def test_not_full_basis():
