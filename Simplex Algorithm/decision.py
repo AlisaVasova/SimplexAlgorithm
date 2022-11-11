@@ -33,7 +33,7 @@ def print_table(basis, bdr, array, n, m, cel_func, delts):
 
     # строки базиса
     for j in range(1, m + 1):
-        if j > 9:
+        if basis[j - 1] > 9:
             print("   x%d  | %7.3f |" % (basis[j - 1], bdr[j - 1]), end='')
         else:
             print("   x%d   | %7.3f |" % (basis[j - 1], bdr[j - 1]), end='')
