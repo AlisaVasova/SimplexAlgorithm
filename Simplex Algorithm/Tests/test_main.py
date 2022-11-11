@@ -35,5 +35,6 @@ def test_full_basis():
     assert basis == [1, 3]
 
 def test_not_full_basis():
-    basis = main.find_basis(3, 2, [[1, 2, 5], [0, 3, 1]])
+    basis = main.find_basis(2, 3, [[1, 2, 5], [0, 3, 1]])
     assert basis == [1, 0]
+
