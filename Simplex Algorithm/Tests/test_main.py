@@ -24,11 +24,12 @@ class MockInputFunction:
 
 def test_input():
     with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", ""]):
-        n, m, cel_func, ogr = main.input_model()
+        n, m, cel_func, array, bdr = main.input_model()
     assert n == 4
     assert m == 2
     assert cel_func == [1, 2, 3, 4]
-    assert ogr == [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
+    assert array == [[1, 2, 3, 4], [6, 7, 8, 9]]
+    assert bdr == [5, 10]
 
 def test_full_basis():
     basis = main.find_basis(2, 3, [[1, 2, 0], [0, 3, 1]])
