@@ -2,6 +2,8 @@ import decision
 
 def find_basis(m, n, array):
     basis = [0] * m # какие переменные входят в базис
+    if m < 1 or n < 1 or len(array) < m:
+        return None
     for k in range(0, m): # для каждой строки базиса
         for i in range(0, n): # для каждой переменной
             flag = False
