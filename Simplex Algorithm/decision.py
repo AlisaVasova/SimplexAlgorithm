@@ -121,7 +121,7 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
 
     if is_there_solution_flag == False:
         print("Целевая функция не ограничена, нет решения")
-        return False, bdr, basis
+        return False, bdr, basis, array
     else:
         print("Решение:")
         for i in range(1, n + 1):
@@ -129,7 +129,7 @@ def decision(m, n, bdr, array, basis, cel_func, delts):
                 print("x" + str(i) + " = " + str(bdr[basis.index(i)]))
             else:
                 print("x" + str(i) + " = 0")
-        return True, bdr, basis
+        return True, bdr, basis, array
 
 def preobr(ved_str, ved_stolb, array, m, n, bdr):
     new_array = []
@@ -149,5 +149,6 @@ def preobr(ved_str, ved_stolb, array, m, n, bdr):
                 new_array[j][i] = array[j][i] / array[ved_str][ved_stolb]
             new_bdr[j] = bdr[j] / array[ved_str][ved_stolb]
 
+    print_table([0]*m, new_bdr, new_array, n, m, [0]*n, [0]*n)
     return new_array, new_bdr
 

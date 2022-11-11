@@ -182,13 +182,13 @@ def main():
         delts_dop = [0] * n_dop
 
         # решаем вспомогательную задачу
-        flag, bdr_dec, basis_dec = decision.decision(m, n_dop, bdr, array_dop, basis_dop, cel_func_dop, delts_dop)
+        flag, bdr_dec, basis_dec, array_dop = decision.decision(m, n_dop, bdr, array_dop, basis_dop, cel_func_dop, delts_dop)
         if (flag == True):
-            bdr, array, basis = reverse_transition(n, m, array_dop, n_dop, bdr, basis_dop)
+            bdr, array, basis = reverse_transition(n, m, array_dop, n_dop, bdr_dec, basis_dec)
 
             # решаем исходную задачу
             delts = [0] * n
-            flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
+            flag, bdr_dec, basis_dec, array = decision.decision(m, n, bdr, array, basis, cel_func, delts)
 
     return flag, bdr_dec, basis_dec
 
