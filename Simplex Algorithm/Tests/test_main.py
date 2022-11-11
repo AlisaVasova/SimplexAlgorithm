@@ -32,4 +32,4 @@ def test_input():
 
 def test_full_basis():
     basis = main.find_basis(3, 2, [[1, 2, 0], [0, 3, 1]])
-    assert basis = [1, 3]
+    assert basis == [1, 3]
