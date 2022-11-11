@@ -27,10 +27,12 @@ def test_preobr():
     m = 2
     array = [[1, 0, 2, 1],[4, 1, 6, 0]]
     bdr = [4, 14]
-    ved_str = 1
+    ved_str = 0
     ved_stolb = 2
     
     array, bdr = decision.preobr(ved_str, ved_stolb, array, m, n, bdr)
+    assert array == [[0.5,0,1,0.5],[1,1,0,-3]]
+    assert bdr == [2,2]
 
 def test_is_decision():
     n = 4
