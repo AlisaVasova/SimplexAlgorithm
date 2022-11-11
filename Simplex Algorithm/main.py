@@ -51,8 +51,14 @@ def artificial_basis(c, n, m, array, bdr, basis):
 def reverse_transition(n, m, array_dop, n_dop, bdr_dop, basis_dop):
     # проверяем получившееся решение
     basis = basis_dop
-    array = array_dop
-    bdr = bdr_dop
+    array = []
+    bdr = []
+    for i in range(0, m): # для каждого ограничения
+        array.append([0] * (n))
+        for j in range(0, n):
+            array[i][j] = array_dop[i][j]
+        bdr.append(bdr_dop[i])
+
     print("Заменяем искусственные переменные.")
     # заменяем искусственные переменные
     for l in range(0, m):
