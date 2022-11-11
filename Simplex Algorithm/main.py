@@ -21,7 +21,7 @@ def find_basis(m, n, array):
                 break
     return basis
 
-def artificial_basis(c, n, m, array, bdr, basis):
+def artificial_basis(c, n, m, array, basis):
     print('Поиск базиса с помощью метода искусственного базиса.')
     print('Добавляем переменных: ' + str(c))
     n_dop = n + c
@@ -177,7 +177,7 @@ def main():
         delts = [0] * n
         flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     else:
-        n_dop, array_dop, cel_func_dop = artificial_basis(c, n, m, array, bdr, basis)
+        n_dop, array_dop, cel_func_dop = artificial_basis(c, n, m, array, basis)
         basis_dop = find_basis(m, n_dop, array_dop)
         delts_dop = [0] * n_dop
 
@@ -189,6 +189,8 @@ def main():
             # решаем исходную задачу
             delts = [0] * n
             flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
+
+    return flag, bdr_dec, basis_dec
 
 if __name__ == "__main__":
     main()

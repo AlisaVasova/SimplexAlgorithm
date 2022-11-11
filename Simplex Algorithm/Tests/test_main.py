@@ -24,7 +24,7 @@ class MockInputFunction:
         __builtins__['input'] = self._orig_input_fn
 
 def test_input():
-    with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", ""]):
+    with MockInputFunction(side_effect=["4", "2", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
         n, m, cel_func, array, bdr = main.input_model()
     assert n == 4
     assert m == 2
@@ -89,3 +89,10 @@ def test_is_not_mis_var():
 def test_all_mis_var():
     basis = [0, 0, 0]
     assert main.count_mis_vars(basis) == 3
+
+def test_main():
+    with MockInputFunction(side_effect=["4", "3", "3", "1", "1", "0", "1", "2", "0", "1", "2", "-2", "-1", "1", "-3", "1", "2", "3", "0", "2", "4"]):
+        flag, bdr, basis = main.main()
+    assert flag == True
+    assert bdr = [0,7,2]
+    assert basis == [2, 3, 4]
