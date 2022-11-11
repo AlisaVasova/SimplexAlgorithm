@@ -13,7 +13,7 @@ def test_print_table():
     array = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
     bdr = [4, 14]
     basis = [2, 4]
-    delts = [0,0,0,0]
+    delts = [0]*10
     assert decision.print_table(basis, bdr, array, n, m, cel_func, delts) == True
 
 def test_is_ved_st():

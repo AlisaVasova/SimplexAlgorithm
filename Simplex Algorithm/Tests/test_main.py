@@ -32,6 +32,15 @@ def test_input():
     assert array == [[1, 2, 3, 4], [6, 7, 8, 9]]
     assert bdr == [5, 10]
 
+def test_wrong_input():
+    with MockInputFunction(side_effect=["-1", "0", "4", "-1", "0", "2", "", "1", "2", "3", "4", "a","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+        n, m, cel_func, array, bdr = main.input_model()
+    assert n == 4
+    assert m == 2
+    assert cel_func == [1, 2, 3, 4]
+    assert array == [[1, 2, 3, 4], [6, 7, 8, 9]]
+    assert bdr == [5, 10]
+
 def test_full_basis():
     basis = main.find_basis(2, 4, [[6, 1, 2, 0], [-2, 0, 3, 1]])
     assert basis == [2, 4]
