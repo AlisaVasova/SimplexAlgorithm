@@ -32,7 +32,7 @@ def test_is_not_ved_str():
     assert decision.ved_stroka([[3, -2],[3,-3]], 1, [2,2], 2) == -1
 
 def test_is_ved_str():
-    assert decision.ved_stroka([[3, 2],[3,3]], 1, [2,2], 2) == 0
+    assert decision.ved_stroka([[3, 3],[3,2]], 1, [2,2], 2) == 0
 
 def test_preobr():
     n = 4
