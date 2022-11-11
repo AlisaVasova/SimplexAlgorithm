@@ -1,17 +1,17 @@
 import decision
 
-def find_basis(m, n, ogr):
+def find_basis(m, n, array):
     basis = [0] * m # какие переменные входят в базис
     for k in range(0, m): # для каждой строки базиса
         for i in range(0, n): # для каждой переменной
             flag = False
             for j in range(0, m): # для каждого ограничения
                 if j != k:
-                    if ogr[j][i] != 0:
+                    if array[j][i] != 0:
                         flag = True
                         break
                 else:
-                    if ogr[j][i] != 1:
+                    if array[j][i] != 1:
                         flag = True
                         break
             if flag == True:
@@ -21,7 +21,7 @@ def find_basis(m, n, ogr):
                 break
     return basis
 
-def artificial_basis(c, n, m, ogr, basis):
+def artificial_basis(c, n, m, array, bdr, basis):
     print('Поиск базиса с помощью метода искусственного базиса.')
     print('Добавляем переменных: ' + str(c))
     n_dop = n + c
@@ -33,7 +33,7 @@ def artificial_basis(c, n, m, ogr, basis):
     for i in range(0, m): # для каждого ограничения
         array_dop.append([0] * (n_dop + 1))
         for j in range(0, n):
-            array_dop[i][j] = ogr[i][j]
+            array_dop[i][j] = array[i][j]
         for j in range(0, c):
             if (basis[i] == 0 and j == q):
                 array_dop[i][n + j] = 1
@@ -47,9 +47,7 @@ def artificial_basis(c, n, m, ogr, basis):
     for i in range(0, c):
         cel_func_dop.append(1)
     # строим стобец БДР
-    bdr_dop = []
-    for j in range(1, m + 1):
-        bdr_dop.append(ogr[j - 1][n])
+    bdr_dop = bdr
     basis_dop = find_basis(m_dop, n_dop, array_dop)
     # оценки
     delts_dop = [0] * n_dop
@@ -76,20 +74,6 @@ def reverse_transition(n, m, array_dop, m_dop, n_dop, bdr_dop, basis_dop):
     delts = [0] * n
 
     return m, n, bdr_dop, array_dop, basis, delts
-
-def split_ogr(ogr, m, n):
-    # стобец БДР
-    bdr = []
-    for j in range(0, m):
-        bdr.append(ogr[j][n])
-    # матрица коэффициентов
-    array = [] # aij
-    for j in range(0, m):
-        array.append([0] * n)
-        for i in range(0, n):
-            array[j][i] = ogr[j][i]
-
-    return bdr, array
 
 def count_mis_vars(basis):
     c = 0 # сколько переменных не хватает в базисе
@@ -131,16 +115,17 @@ def input_model():
 
     while True:
         try:
-            ogr = []
+            array = []
+            bdr = []
 
             for j in range(1, m + 1):
                 print("Введите коэффициенты при переменных ограничения " + str(j) + ":")
-                ogr.append([0] * (n + 1))
+                array.append([0] * (n))
                 for i in range(1, n + 1):
                     print("x" + str(i) + ": ", end='')
-                    ogr[j - 1][i - 1] = float(input())
+                    array[j - 1][i - 1] = float(input())
                 print("Введите значение правой части ограничения " + str(j) + ": ", end='')
-                ogr[j - 1][n] = float(input())
+                bdr.append(float(input()))
 
             break
         except ValueError:
@@ -174,22 +159,21 @@ def input_model():
             print(str(abs(ogr[j - 1][i - 1])) + "x" + str(i) + " ", end='')
         print("= " + str(ogr[j - 1][n]))
 
-    return n, m, cel_func, ogr
+    return n, m, cel_func, array, bdr
 
 def main():
-    n, m, cel_func, ogr = input_model()
+    n, m, cel_func, array, bdr = input_model()
     # поиск базиса
-    basis = find_basis(m, n, ogr)
+    basis = find_basis(m, n, array, bdr)
 
     c = count_mis_vars(basis)
 
     if (c == 0):    
-        bdr, array = split_ogr(ogr, m, n)
         # оценки
         delts = [0] * n
         flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     else:
-        m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, ogr, basis)
+        m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop = artificial_basis(c, n, m, array, bdr, basis)
 
         # решаем вспомогательную задачу
         flag, bdr_dec, basis_dec = decision.decision(m_dop, n_dop, bdr_dop, array_dop, basis_dop, cel_func_dop, delts_dop)

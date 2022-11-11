@@ -29,3 +29,7 @@ def test_input():
     assert m == 2
     assert cel_func == [1, 2, 3, 4]
     assert ogr == [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
+
+def test_full_basis():
+    basis = main.find_basis(3, 2, [[1, 2, 0], [0, 3, 1]])
+    assert basis = [1, 3]
