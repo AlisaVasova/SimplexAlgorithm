@@ -38,7 +38,7 @@ def test_is_ved_str():
     assert decision.ved_stroka([[3, 3],[3,2]], 1, [2,2], 2) == 0
 
 def test_neg_ved_str():
-    assert decision.ved_stroka([]], -1, [2,2], 2) == None
+    assert decision.ved_stroka([], -1, [2,2], 2) == None
 
 def test_preobr():
     n = 4
