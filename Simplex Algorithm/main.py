@@ -175,7 +175,7 @@ def main():
     if (c == 0):    
         # оценки
         delts = [0] * n
-        flag, bdr_dec, basis_dec = decision.decision(m, n, bdr, array, basis, cel_func, delts)
+        flag, bdr_dec, basis_dec, array = decision.decision(m, n, bdr, array, basis, cel_func, delts)
     else:
         n_dop, array_dop, cel_func_dop = artificial_basis(c, n, m, array, basis)
         basis_dop = find_basis(m, n_dop, array_dop)
