@@ -45,9 +45,8 @@ def test_art_basis():
    n = 6
    m = 3
    array = [[1,0,0,1,0,6],[3,1,-4,0,0,2],[1,2,0,0,1,2]]
-   bdr = [9, 2, 6]
    basis = [4, 0, 5]
-   n_dop, array_dop, cel_func_dop = main.artificial_basis(c, n, m, array, bdr, basis)
+   n_dop, array_dop, cel_func_dop = main.artificial_basis(c, n, m, array, basis)
    assert n_dop == 7 
    assert array_dop == [[1,0,0,1,0,6,0],[3,1,-4,0,0,2,1],[1,2,0,0,1,2,0]]
    assert cel_func_dop == [0,0,0,0,0,0,1]
